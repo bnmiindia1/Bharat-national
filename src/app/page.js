@@ -1,9 +1,14 @@
-export default function Home() {
+import Navbar from '../../component/navbar'
+import Hero from '../../component/hero'
+import ServicesSection from '../../component/ServicesSection'
+
+export default function Page() {
   return (
-    <main className="min-h-screen flex items-center justify-center">
-      <h1 className="text-4xl font-bold text-blue-600">
-        Next.js + Tailwind 🚀
-      </h1>
-    </main>
+    <>
+      <Navbar />
+      <Hero />
+      <ServicesSection />
+      <div className="h-[200vh] bg-white" /> {/* scroll content */}
+    </>
   )
 }
