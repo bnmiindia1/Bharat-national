@@ -47,16 +47,16 @@ export default function Navbar() {
           {/* LOGO */}
           <div className="text-white font-bold text-xl leading-tight">
             BNMI <br />
-            <span className="text-sm font-normal">Multimedia Institute</span>
+            <span className="text-sm font-normal">Multimedia Institute hello this is demo </span>
           </div>
 
           {/* MENU */}
-          <nav className="ml-auto hidden lg:flex gap-8 text-white font-semibold">
+          <nav className="ml-auto hidden lg:flex gap-8 text-white font-semibold ">
             <Dropdown title="HOME" />
             <Dropdown title="ABOUT US" />
-            <Dropdown title="SERVICES" />
-            <Dropdown title="PROJECTS" />
-            <Dropdown title="PAGES" />
+            <Dropdown title="COURCES" />
+          <Dropdown title="CIRTIFICATION" />
+            <Dropdown title="VERIFICATION" />
             <Dropdown title="BLOG" />
             <Dropdown title="SHOP" />
             <Dropdown title="CONTACT US" />
