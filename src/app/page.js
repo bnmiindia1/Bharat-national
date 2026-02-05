@@ -3,6 +3,8 @@ import Hero from '../../component/hero'
 import ServicesSection from '../../component/ServicesSection'
 
 import StatsSection from '../../component/stateSection'
+import TestimonialsSection from '../../component/TestimonialsSection'
+import Footer from '../../component/Footer'
 
 export default function Page() {
   return (
@@ -11,7 +13,11 @@ export default function Page() {
       <Hero />
       <ServicesSection />
       <StatsSection />
-      <div className="h-[200vh] bg-white" /> {/* scroll content */}
+      <TestimonialsSection />
+      <Footer />
+
     </>
+    
+
   )
 }
