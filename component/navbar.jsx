@@ -36,7 +36,7 @@ export default function Navbar() {
           {/* LOGO */}
           <div className="text-white font-bold text-xl">
             BNMI
-            <div className="text-sm font-normal">Multimedia Institute this is testing</div>
+            <div className="text-sm font-normal">Multimedia Institute second testing </div>
           </div>
 
           {/* MENU */}
