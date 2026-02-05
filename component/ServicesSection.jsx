@@ -57,14 +57,14 @@ export default function ServicesSection() {
           {/* Arrows */}
           <button
             onClick={() => setIndex(Math.max(index - 1, 0))}
-            className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/60 px-4 py-2"
+            className=" w-20 h-20 absolute left-0 top-70 -translate-y-1/2 bg-black/60 px-4 py-2"
           >
             ‹
           </button>
 
           <button
             onClick={() => setIndex(Math.min(index + 1, maxIndex))}
-            className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/60 px-4 py-2"
+            className="w-20 h-20 absolute top-70 right-0  -translate-y-1/2 bg-black/60 px-4 py-2 text-white"
           >
             ›
           </button>

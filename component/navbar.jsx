@@ -36,27 +36,67 @@ export default function Navbar() {
           {/* LOGO */}
           <div className="text-white font-bold text-xl">
             BNMI
-            <div className="text-sm font-normal">Multimedia Institute second testing </div>
+            <div className="text-sm font-normal">Multimedia Institute  </div>
           </div>
 
           {/* MENU */}
-          <nav className="ml-auto hidden lg:flex gap-8 text-white font-semibold">
-            <Dropdown title="HOME" />
-            <Dropdown title="ABOUT US" />
-            <Dropdown title="COURSES" />
-            <Dropdown title="CERTIFICATION" />
-            <Dropdown title="VERIFICATION" />
-          </nav>
+         <nav className="ml-auto hidden lg:flex gap-10 text-white font-semibold">
+
+  <Dropdown
+    title="HOME"
+    items={[
+      { label: 'Home 1' },
+      { label: 'Home 2' },
+      { label: 'Home 3' },
+    ]}
+  />
+
+  <Dropdown
+    title="ABOUT US"
+    items={[
+      { label: 'About BNMI' },
+      { label: 'Our Faculty' },
+      { label: 'Infrastructure' },
+    ]}
+  />
+
+  <Dropdown
+    title="COURSES"
+    items={[
+      { label: 'Web Development' },
+      { label: 'Graphic Design' },
+      { label: 'Digital Marketing' },
+      { label: 'Video Editing' },
+    ]}
+  />
+
+  <Dropdown
+    title="CERTIFICATION"
+    items={[
+      { label: 'Government Certified' },
+      { label: 'Industry Certification' },
+    ]}
+  />
+
+  <Dropdown
+    title="VERIFICATION"
+    items={[
+      { label: 'Student Verification' },
+      { label: 'Certificate Verification' },
+    ]}
+  />
+
+</nav>
 
           {/* CTA BUTTONS */}
           <div
             className={`absolute top-1/2 -translate-y-1/2 flex gap-4
             transition-all duration-500
-            ${scrolled ? 'right-200' : '-right-[480px]'}`}
+            ${scrolled ? 'right-200' : '-right-[520px]'}`}
           >
-            {['CONTACT NOW', 'FRANCHISE', 'LOGIN'].map((text) => (
+            {['CONTACT NOW', 'FRANCHISE FORM' , 'LOGIN'].map((text) => (
               <div key={text} className="relative">
-                <div className="absolute -bottom-2 -left-2 w-full h-full bg-black"></div>
+                <div className="absolute -bottom-2 -left-2 w-full h-full bg-gray-600 "></div>
                 <button className="relative bg-white text-black px-6 py-3 font-semibold
                   hover:bg-black hover:text-white transition">
                   {text}
