@@ -69,11 +69,10 @@ export default function Footer() {
         {/* ABOUT */}
         <div className="footer-anim">
           <h2 className="text-3xl font-bold mb-4">
-            <span className="text-[#19b9f1]">M</span>oran
+            <span className="text-[#19b9f1]">B</span>NMI
           </h2>
           <p className="text-gray-300 text-sm leading-relaxed">
-            Welcome to our web design agency. Lorem ipsum simply free text dolor
-            sited amet cons cing elit. Many variations available.
+            BHARAT NATIONAL MULTIMEDIA INSTITUTE is a well-established organization specializing in offering franchise opportunities to computer training institutes and skill development centers.
           </p>
 
           <div className="flex gap-4 mt-6 text-lg">
@@ -116,15 +115,15 @@ export default function Footer() {
 
           <p className="text-[#19b9f1] font-semibold mb-1">Address</p>
           <p className="text-gray-300 text-sm mb-4">
-            PO Box 223158 Oliver Street East <br />
-            Victoria 2006 UK
+            rukmuni gaon beltola <br />
+            guwahati - 781028
           </p>
 
           <p className="text-[#19b9f1] font-semibold mb-1">CALL ANYTIME :</p>
           <p className="text-gray-300 mb-4">666 999 0000</p>
 
           <p className="text-[#19b9f1] font-semibold mb-1">Email Address</p>
-          <p className="text-gray-300">needhelp@moran.com</p>
+          <p className="text-gray-300">needhelp@bnmi.com</p>
         </div>
 
         {/* NEWSLETTER */}
@@ -150,7 +149,7 @@ export default function Footer() {
 
       {/* BOTTOM */}
       <div className="border-t border-gray-700 py-4 text-center text-sm text-gray-400">
-        © Copyright 2026 Moran IT Solution
+        © Copyright 2026 BNMI
       </div>
     </footer>
   )

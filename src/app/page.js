@@ -5,6 +5,9 @@ import ServicesSection from '../../component/ServicesSection'
 import StatsSection from '../../component/stateSection'
 import TestimonialsSection from '../../component/TestimonialsSection'
 import Footer from '../../component/Footer'
+import StagesSection from '../../component/StagesSection'
+import WorkShowcase from '../../component/WorkShowcase'
+import TeamSection from '../../component/TeamSection'
 
 export default function Page() {
   return (
@@ -12,8 +15,11 @@ export default function Page() {
       <Navbar />
       <Hero />
       <ServicesSection />
+      <StagesSection />
       <StatsSection />
+      <WorkShowcase />
       <TestimonialsSection />
+      <TeamSection />
       <Footer />
 
     </>
