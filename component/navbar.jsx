@@ -1,113 +1,137 @@
 'use client'
+
 import { useEffect, useState } from 'react'
 import Dropdown from '../component/dropdown'
+import { databases } from '@/lib/appwrite'
+import Link from 'next/link'
+import { Query } from 'appwrite'
+
+const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID
+const WEBSITE_COLLECTION = 'website'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const [navbarData, setNavbarData] = useState(null)
 
+  /* ---------------- SCROLL EFFECT ---------------- */
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 120)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  /* ---------------- FETCH CMS DATA ---------------- */
+  useEffect(() => {
+    const fetchNavbar = async () => {
+      try {
+        const res = await databases.listDocuments(
+          DATABASE_ID,
+          WEBSITE_COLLECTION,
+          [Query.limit(1)]
+        )
+
+        if (res.documents.length) {
+          setNavbarData(res.documents[0])
+        }
+      } catch (error) {
+        console.error('Navbar CMS load failed:', error)
+      }
+    }
+
+    fetchNavbar()
+  }, [])
+
   return (
-    <header className={`${scrolled ? 'fixed' : 'absolute'} top-0 left-0 w-full z-50`}>
-      
-      {/* TOP INFO BAR */}
-      <div className={`bg-black text-white text-sm transition-all duration-300
-        ${scrolled ? 'opacity-100 py-2' : 'opacity-0 h-0 overflow-hidden'}`}>
+    <header
+      className={`${scrolled ? 'fixed' : 'absolute'} top-0 left-0 w-full z-50`}
+    >
+      {/* ---------------- TOP INFO BAR ---------------- */}
+      <div
+        className={`bg-black text-white text-sm transition-all duration-300
+        ${scrolled ? 'opacity-100 py-2' : 'opacity-0 h-0 overflow-hidden'}`}
+      >
         <div className="flex justify-between px-16">
-          <span>Welcome To Bharat National Multimedia Institute</span>
+          <span>
+            {navbarData?.topBarText ||
+              'Welcome To Bharat National Multimedia Institute'}
+          </span>
+
           <div className="flex gap-8">
-            <span>MON - SAT 10AM - 6PM</span>
-            <span>CALL ANYTIME : 000 888 0000</span>
+            <span>
+              {navbarData?.dateText || 'MON - SAT 10AM - 6PM'}
+            </span>
+
+            <span>
+              CALL ANYTIME : {navbarData?.phone || '000 888 0000'}
+            </span>
           </div>
         </div>
       </div>
 
-      {/* NAVBAR */}
-      <div className="relative flex w-full">
-        
-        {/* BLUE BAR */}
-        <div className={`bg-[#19b9f1] h-[90px] flex items-center px-16 relative
-          transition-all duration-500 ${scrolled ? 'w-full' : 'w-[60%]'}`}>
+      {/* ---------------- NAVBAR ---------------- */}
+      <div className="relative w-full flex">
+        <div
+          className={`bg-[#19b9f1] h-[90px] flex items-center px-16 relative
+          transition-all duration-500 ease-in-out
+          ${scrolled ? 'w-full' : 'w-[60%]'}`}
+        >
+          {/* ---------------- LOGO FROM CMS ---------------- */}
+          {navbarData?.logoUrl ? (
+            <img
+              src={navbarData.logoUrl}
+              alt="Website Logo"
+              className="h-12 object-contain"
+            />
+          ) : (
+            <div className="text-white font-bold text-xl">
+              {navbarData?.siteName || 'LOGO'}
+            </div>
+          )}
 
-          {/* LOGO */}
-          <div className="text-white font-bold text-xl">
-            BNMI
-            <div className="text-sm font-normal">Multimedia Institute  </div>
-          </div>
+          {/* ---------------- STATIC MENU ---------------- */}
+          <nav className="ml-auto hidden lg:flex gap-10 text-white font-semibold">
+            <Dropdown title="HOME" items={[{ label: 'Home', href: '/' }]} />
+            <Dropdown title="ABOUT US" items={[{ label: 'About', href: '/about' }]} />
+            <Dropdown title="COURSES" items={[{ label: 'Courses', href: '/courses' }]} />
+            <Dropdown title="CERTIFICATION" items={[{ label: 'Certification', href: '/certification' }]} />
+            <Dropdown title="VERIFICATION" items={[{ label: 'Verification', href: '/verification' }]} />
+          </nav>
 
-          {/* MENU */}
-         <nav className="ml-auto hidden lg:flex gap-10 text-white font-semibold">
-
-  <Dropdown
-    title="HOME"
-    items={[
-      { label: 'Home 1' },
-      { label: 'Home 2' },
-      { label: 'Home 3' },
-    ]}
-  />
-
-  <Dropdown
-    title="ABOUT US"
-    items={[
-      { label: 'About BNMI' },
-      { label: 'Our Faculty' },
-      { label: 'Infrastructure' },
-    ]}
-  />
-
-  <Dropdown
-    title="COURSES"
-    items={[
-      { label: 'Web Development' },
-      { label: 'Graphic Design' },
-      { label: 'Digital Marketing' },
-      { label: 'Video Editing' },
-    ]}
-  />
-
-  <Dropdown
-    title="CERTIFICATION"
-    items={[
-      { label: 'Government Certified' },
-      { label: 'Industry Certification' },
-    ]}
-  />
-
-  <Dropdown
-    title="VERIFICATION"
-    items={[
-      { label: 'Student Verification' },
-      { label: 'Certificate Verification' },
-    ]}
-  />
-
-</nav>
-
-          {/* CTA BUTTONS */}
+          {/* ---------------- CTA BUTTONS ---------------- */}
           <div
             className={`absolute top-1/2 -translate-y-1/2 flex gap-4
             transition-all duration-500
-            ${scrolled ? 'right-200' : '-right-[520px]'}`}
+            ${scrolled ? 'right-16' : '-right-[520px]'}`}
           >
-            {['CONTACT NOW', 'FRANCHISE FORM' , 'LOGIN'].map((text) => (
-              <div key={text} className="relative">
-                <div className="absolute -bottom-2 -left-2 w-full h-full bg-gray-600 "></div>
-                <button className="relative bg-white text-black px-6 py-3 font-semibold
-                  hover:bg-black hover:text-white transition">
-                  {text}
-                </button>
-              </div>
-            ))}
+            <CTAButton text="CONTACT NOW" />
+
+            <Link href="/franchise/login">
+              <CTAButton text="FRANCHISE LOGIN" />
+            </Link>
+
+            <Link href="/admin/login">
+              <CTAButton text="LOGIN" />
+            </Link>
           </div>
         </div>
 
         {!scrolled && <div className="w-[40%]" />}
       </div>
     </header>
+  )
+}
+
+/* ---------------- CTA BUTTON ---------------- */
+function CTAButton({ text }) {
+  return (
+    <div className="relative">
+      <div className="absolute -bottom-2 -left-2 w-full h-full bg-gray-600"></div>
+      <button
+        className="relative bg-white text-black px-6 py-3 font-semibold
+        hover:bg-black hover:text-white transition-all duration-300 whitespace-nowrap"
+      >
+        {text}
+      </button>
+    </div>
   )
 }

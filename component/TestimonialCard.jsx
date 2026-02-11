@@ -1,21 +1,29 @@
-export default function TestimonialCard({ name, role, image, text }) {
+export default function TestimonialCard({
+  name,
+  role,
+  image,
+  text,
+}) {
   return (
     <div className="min-w-[620px] bg-white rounded-2xl shadow-xl p-10 relative">
 
       {/* Top Row */}
       <div className="flex justify-between items-start mb-6">
-        
+
         {/* Stars */}
         <div className="flex text-orange-400 text-lg">
           ★★★★★
         </div>
 
         {/* Profile Image */}
-        <img
-          src={image}
-          alt={name}
-          className="w-20 h-20 rounded-xl object-cover"
-        />
+        {image && image !== '' && (
+          <img
+            src={image}
+            alt={name || 'student'}
+            className="w-20 h-20 rounded-xl object-cover"
+          />
+        )}
+
       </div>
 
       {/* Name + Role */}

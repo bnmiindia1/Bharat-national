@@ -1,135 +1,103 @@
 'use client'
+
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import TestimonialCard from './TestimonialCard'
+import { databases } from '@/lib/appwrite'
+import { Query } from 'appwrite'
+import TestimonialCard from '../component/TestimonialCard'
 
-const testimonials = [
-  {
-    name: 'JACKES SMITH',
-    role: 'Market Manager',
-    image: 'https://images.unsplash.com/photo-1603415526960-f7e0328c63b1',
-    text:
-      'Website development begins with the fact that a specialist professionally studies your market, target audience and competitors.',
-  },
-  {
-    name: 'ANGILINA MARKER',
-    role: 'Business CEO',
-    image: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e',
-    text:
-      'Website development begins with the fact that a specialist professionally studies your market, target audience and competitors.',
-  },
-  {
-    name: 'DAVID WARNER',
-    role: 'Product Lead',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
-    text:
-      'For each customer, we draw up detailed instructions and build scalable digital solutions.',
-  },
-
-   {
-    name: 'DAVID WARNER',
-    role: 'Product Lead',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
-    text:
-      'For each customer, we draw up detailed instructions and build scalable digital solutions.',
-  },
-
-
-   {
-    name: 'DAVID WARNER',
-    role: 'Product Lead',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
-    text:
-      'For each customer, we draw up detailed instructions and build scalable digital solutions.',
-  },
-
-
-   {
-    name: 'DAVID WARNER',
-    role: 'Product Lead',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
-    text:
-      'For each customer, we draw up detailed instructions and build scalable digital solutions.',
-  },
-
-
-   {
-    name: 'DAVID WARNER',
-    role: 'Product Lead',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
-    text:
-      'For each customer, we draw up detailed instructions and build scalable digital solutions.',
-  },
-
-
-   {
-    name: 'DAVID WARNER',
-    role: 'Product Lead',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
-    text:
-      'For each customer, we draw up detailed instructions and build scalable digital solutions.',
-  },
-
-
-   {
-    name: 'DAVID WARNER',
-    role: 'Product Lead',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
-    text:
-      'For each customer, we draw up detailed instructions and build scalable digital solutions.',
-  },
-
-   {
-    name: 'DAVID WARNER',
-    role: 'Product Lead',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
-    text:
-      'For each customer, we draw up detailed instructions and build scalable digital solutions.',
-  },
-]
+const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID
+const COLLECTION_ID = 'testimonials'
 
 export default function TestimonialsSection() {
   const containerRef = useRef(null)
   const [index, setIndex] = useState(0)
+  const [testimonials, setTestimonials] = useState([])
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const res = await databases.listDocuments(
+          DATABASE_ID,
+          COLLECTION_ID,
+          [Query.orderAsc('order')]
+        )
+        setTestimonials(res.documents)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    fetchTestimonials()
+  }, [])
 
   const slideTo = (i) => {
-    const width = 560
+    const width = 620
+    if (!containerRef.current) return
+
     gsap.to(containerRef.current, {
       x: -width * i,
       duration: 0.8,
       ease: 'power3.out',
     })
+
     setIndex(i)
   }
 
-  const next = () => slideTo((index + 1) % testimonials.length)
-  const prev = () => slideTo((index - 1 + testimonials.length) % testimonials.length)
+  const next = () =>
+    slideTo((index + 1) % testimonials.length)
 
-  useEffect(() => {
-    const timer = setInterval(next, 5000)
-    return () => clearInterval(timer)
-  }, [index])
+  const prev = () =>
+    slideTo(
+      (index - 1 + testimonials.length) %
+        testimonials.length
+    )
+
+  if (!testimonials.length) return null
 
   return (
     <section className="py-24 bg-white relative overflow-hidden">
       <div className="text-center mb-16">
         <h2 className="text-4xl font-extrabold">
           What Says Our <br />
-          <span className="text-[#19b9f1]">Student </span> Response
+          <span className="text-[#19b9f1]">
+            Student
+          </span>{' '}
+          Response
         </h2>
       </div>
 
-      <button onClick={prev} className="absolute left-6 top-1/2 -translate-y-1/2">
+      {/* Arrows */}
+      <button
+        onClick={prev}
+        className="absolute left-6 top-1/2 -translate-y-1/2"
+      >
         ‹
       </button>
-      <button onClick={next} className="absolute right-6 top-1/2 -translate-y-1/2">
+
+      <button
+        onClick={next}
+        className="absolute right-6 top-1/2 -translate-y-1/2"
+      >
         ›
       </button>
 
       <div className="overflow-hidden px-24">
-        <div ref={containerRef} className="flex gap-10" style={{ width: testimonials.length * 560 }}>
-          {testimonials.map((t, i) => (
-            <TestimonialCard key={i} {...t} />
+        <div
+          ref={containerRef}
+          className="flex gap-10"
+          style={{
+            width: testimonials.length * 620,
+          }}
+        >
+          {testimonials.map((t) => (
+            <TestimonialCard
+              key={t.$id}
+              name={t.name}
+              role={t.role}
+              image={t.imageUrl}
+              text={t.text}
+            />
           ))}
         </div>
       </div>
