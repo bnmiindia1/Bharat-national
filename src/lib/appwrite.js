@@ -1,21 +1,13 @@
-import { Client, Account, Databases, Storage, ID } from "appwrite";
+import { Client, Databases, Account, Storage, ID } from "appwrite";
 
-const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT;
-const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;
+const client = new Client();
 
-let client = null;
-let account = null;
-let databases = null;
-let storage = null;
+client
+  .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
+  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID);
 
-if (endpoint && projectId && typeof window !== "undefined") {
-  client = new Client()
-    .setEndpoint(endpoint)
-    .setProject(projectId);
+export const databases = new Databases(client);
+export const account = new Account(client);
+export const storage = new Storage(client);
 
-  account = new Account(client);
-  databases = new Databases(client);
-  storage = new Storage(client);
-}
-
-export { client, account, databases, storage, ID };
+export { ID };
