@@ -25,7 +25,7 @@ export default function TeamSlider() {
         COLLECTION_ID,
         [Query.orderAsc('order')]
       )
-
+console.log(res)
       setTeam(res.documents)
 
     } catch (error) {
